@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrivaConvert | The Ultimate Local Converter Suite</title>
+    
+    <!-- Primary SEO -->
     <meta name="description" id="meta-desc" content="A completely private, local file conversion suite. Convert images, audio, video, and documents securely in your browser with zero server uploads using WebAssembly technology.">
+    <meta name="keywords" content="file converter, local converter, privacy, image converter, video converter, audio converter, pdf converter, no upload converter">
+    
+    <!-- Open Graph / Social Media SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PrivaConvert | Local & Private File Conversion">
+    <meta property="og:description" content="Convert your files safely in your browser. No uploads, no servers, 100% private.">
+    <meta property="og:image" content="logo.png">
+    
+    <!-- Resource Hints -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://unpkg.com">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -22,6 +36,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Structured Data for Google Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "PrivaConvert",
+      "operatingSystem": "Web Browser",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Convert images, audio, video, and documents locally in your browser with zero server uploads."
+    }
+    </script>
     
     <script>
         tailwind.config = {
@@ -52,6 +83,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #020617;
             color: #e2e8f0;
+            scroll-behavior: smooth;
         }
 
         .glass-panel {
@@ -119,15 +151,15 @@
     <nav class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/" class="flex items-center gap-2">
-                    <div class="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20">
+                <a href="/" class="flex items-center gap-2 group">
+                    <div class="bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 group-hover:border-emerald-500/50 transition-colors">
                         <i data-lucide="shield-check" class="h-6 w-6 text-emerald-500"></i>
                     </div>
                     <span class="font-bold text-xl tracking-tight text-white">Priva<span class="text-emerald-500">Convert</span></span>
                 </a>
-                <div class="hidden md:flex items-center gap-8">
-                    <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <div class="hidden md:flex items-center gap-4">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         Secure local environment
                     </div>
                 </div>
@@ -146,7 +178,7 @@
         <!-- Hero Section -->
         <div class="text-center mb-10 max-w-3xl mx-auto space-y-4">
             <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight" id="hero-main-heading">
-                Any Format. Any Time.
+                Universal Local Converter
             </h1>
             <h2 class="text-2xl font-semibold">
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600" id="hero-title">Completely Private.</span>
@@ -155,7 +187,7 @@
             <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
                 PrivaConvert is a completely private, local file conversion suite. Unlike other tools, your files are processed directly on your device using WebAssembly technology. This means your data never touches a server, keeping your sensitive information 100% secure.
             </p>
-            <p class="text-slate-500 text-sm font-medium">
+            <p class="text-slate-500 text-sm font-medium" id="hero-support-text">
                 Convert images, audio, video, and documents with no size limits and zero data tracking.
             </p>
         </div>
@@ -170,7 +202,7 @@
                     
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
                         <!-- FROM Selector -->
-                        <div class="relative w-full sm:w-48 z-50">
+                        <div class="relative w-full sm:w-56 z-50">
                             <label class="text-[10px] uppercase text-slate-500 font-bold mb-1 ml-1 block">Convert</label>
                             <button id="from-selector-btn" class="w-full bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white text-sm rounded-lg p-3 flex items-center justify-between transition-all group">
                                 <span class="flex items-center gap-2">
@@ -179,20 +211,18 @@
                                 </span>
                                 <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors"></i>
                             </button>
-                            <div id="from-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[240px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
+                            <div id="from-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[320px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
                                 <div id="from-grid"></div>
                             </div>
                         </div>
 
                         <!-- Swap Button -->
-                        <div class="flex flex-col items-center pt-5">
-                            <button onclick="swapFormats()" class="p-2 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500/50 text-slate-400 hover:text-emerald-400 transition-all shadow-lg group">
-                                <i data-lucide="arrow-right-left" class="h-4 w-4 group-hover:scale-110 transition-transform"></i>
-                            </button>
-                        </div>
+                        <button onclick="swapFormats()" class="p-2.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500/50 text-slate-400 hover:text-emerald-400 transition-all shadow-lg active:scale-90 group mt-4 sm:mt-4">
+                            <i data-lucide="arrow-right-left" class="h-4 w-4 group-hover:rotate-180 transition-transform duration-500"></i>
+                        </button>
 
                         <!-- TO Selector -->
-                        <div class="relative w-full sm:w-48 z-40">
+                        <div class="relative w-full sm:w-56 z-40">
                             <label class="text-[10px] uppercase text-slate-500 font-bold mb-1 ml-1 block">Into</label>
                             <button id="to-selector-btn" class="w-full bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white text-sm rounded-lg p-3 flex items-center justify-between transition-all group">
                                 <span class="flex items-center gap-2">
@@ -201,7 +231,7 @@
                                 </span>
                                 <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors"></i>
                             </button>
-                            <div id="to-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[240px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
+                            <div id="to-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[320px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
                                 <div id="to-grid"></div>
                             </div>
                         </div>
@@ -218,8 +248,8 @@
                                 <i data-lucide="upload-cloud" class="h-10 w-10 text-emerald-500"></i>
                             </div>
                             <div class="text-center">
-                                <p class="text-lg font-medium text-white group-hover:text-emerald-400 transition-colors">Click or Drag files here</p>
-                                <p class="text-sm text-slate-500 mt-1" id="univ-subtitle">Matching selected input format</p>
+                                <p class="text-lg font-medium text-white group-hover:text-emerald-400 transition-colors">Click or drag files here</p>
+                                <p class="text-sm text-slate-500 mt-1" id="univ-subtitle">Please select a file type above</p>
                             </div>
                         </div>
                     </div>
@@ -247,8 +277,8 @@
                         </div>
                         <div id="file-list-univ" class="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scroll"></div>
                         <div class="flex justify-end pt-4">
-                            <button id="download-all-univ" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
-                                <i data-lucide="download"></i> Download All
+                            <button id="download-all-univ" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2 active:scale-95">
+                                <i data-lucide="download"></i> Download All (.zip)
                             </button>
                         </div>
                     </div>
@@ -256,9 +286,9 @@
             </div>
 
             <!-- Footer Banner -->
-            <div class="bg-slate-900 border-t border-slate-800 p-3 flex items-center justify-center gap-2 text-xs text-slate-500">
+            <div class="bg-slate-900 border-t border-slate-800 p-3 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
                 <i data-lucide="lock" class="h-3 w-3"></i>
-                <span>Zero-Knowledge Architecture: Files never leave your browser memory.</span>
+                <span>Zero-Knowledge Architecture: NO DATA LEAVES YOUR DEVICE</span>
             </div>
         </div>
 
@@ -274,7 +304,7 @@
 
     <footer class="bg-slate-950 border-t border-slate-800 py-12 mt-20">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-500 text-sm">PrivaConvert — Local, Private, Secure.</p>
+            <p class="text-slate-500 text-sm">PrivaConvert &copy; 2025 — Secure Local File Utility</p>
         </div>
     </footer>
 
@@ -402,8 +432,8 @@
         const toBadge = document.getElementById('to-format-badge'); 
         const toLabel = document.getElementById('to-format-label'); 
 
-        let selectedFrom = 'jpg';
-        let selectedTo = 'png';
+        let selectedFrom = null;
+        let selectedTo = null;
         let processedFiles = []; 
         let conversionQueue = [];
         let isProcessing = false;
@@ -420,38 +450,43 @@
 
         function showMessage(text, isError = false) {
             const msgEl = document.getElementById('app-message');
-            const msgText = document.getElementById('message-text');
-            const msgIcon = document.getElementById('message-icon');
-            msgText.textContent = text;
-            msgIcon.className = isError ? "h-5 w-5 text-red-400" : "h-5 w-5 text-emerald-400";
+            document.getElementById('message-text').textContent = text;
+            document.getElementById('message-icon').className = isError ? "h-4 w-4 text-red-400" : "h-4 w-4 text-emerald-400";
             msgEl.classList.add('show');
             setTimeout(() => msgEl.classList.remove('show'), 3000);
         }
 
-        // Data Structure: Lowercase labels for UI consistency
-        let inputCategories = [
-            { title: "audio", formats: [{ val: "aac", label: "AAC", accept: ".aac,audio/aac", type: "audio" }, { val: "aiff", label: "AIFF", accept: ".aiff,.aif,audio/aiff", type: "audio" }, { val: "flac", label: "FLAC", accept: ".flac,audio/flac", type: "audio" }, { val: "m4a", label: "M4A", accept: ".m4a,audio/mp4", type: "audio" }, { val: "mp3", label: "MP3", accept: ".mp3,audio/mpeg", type: "audio" }, { val: "ogg", label: "OGG", accept: ".ogg,audio/ogg", type: "audio" }, { val: "wav", label: "WAV", accept: ".wav,audio/wav", type: "audio" }, { val: "wma", label: "WMA", accept: ".wma,audio/x-ms-wma", type: "audio" }] },
-            { title: "document", formats: [{ val: "md", label: "MD", accept: ".md,text/markdown,text/plain", type: "text" }, { val: "pdf", label: "PDF", accept: ".pdf,application/pdf", type: "doc" }, { val: "txt", label: "TXT", accept: ".txt,text/plain", type: "text" }] },
-            { title: "image", formats: [{ val: "bmp", label: "BMP", accept: ".bmp,image/bmp", type: "image" }, { val: "gif", label: "GIF", accept: ".gif,image/gif", type: "image" }, { val: "ico", label: "ICO", accept: ".ico,image/x-icon", type: "image" }, { val: "jpg", label: "JPG", accept: ".jpg,.jpeg,image/jpeg", type: "image" }, { val: "png", label: "PNG", accept: ".png,image/png", type: "image" }, { val: "tiff", label: "TIFF", accept: ".tiff,.tif,image/tiff", type: "image" }, { val: "webp", label: "WEBP", accept: ".webp,image/webp", type: "image" }] },
-            { title: "video", formats: [{ val: "avi", label: "AVI", accept: ".avi,video/x-msvideo", type: "video" }, { val: "mkv", label: "MKV", accept: ".mkv,video/x-matroska", type: "video" }, { val: "mov", label: "MOV", accept: ".mov,video/quicktime", type: "video" }, { val: "mp4", label: "MP4", accept: ".mp4,video/mp4", type: "video" }, { val: "webm", label: "WEBM", accept: ".webm,video/webm", type: "video" }, { val: "wmv", label: "WMV", accept: ".wmv,video/x-ms-wmv", type: "video" }] }
+        // Data Structure: Category titles remain lowercase for data handling but are transformed via CSS
+        const inputCategories = [
+            { title: "audio", formats: [{ val: "aac", label: "AAC", accept: ".aac", type: "audio" }, { val: "mp3", label: "MP3", accept: ".mp3", type: "audio" }, { val: "wav", label: "WAV", accept: ".wav", type: "audio" }, { val: "flac", label: "FLAC", accept: ".flac", type: "audio" }] },
+            { title: "document", formats: [{ val: "md", label: "MD", accept: ".md", type: "text" }, { val: "pdf", label: "PDF", accept: ".pdf", type: "doc" }, { val: "txt", label: "TXT", accept: ".txt", type: "text" }] },
+            { title: "image", formats: [{ val: "bmp", label: "BMP", accept: ".bmp", type: "image" }, { val: "gif", label: "GIF", accept: ".gif", type: "image" }, { val: "ico", label: "ICO", accept: ".ico", type: "image" }, { val: "jpg", label: "JPG", accept: ".jpg,.jpeg", type: "image" }, { val: "png", label: "PNG", accept: ".png", type: "image" }, { val: "webp", label: "WEBP", accept: ".webp", type: "image" }] },
+            { title: "video", formats: [{ val: "avi", label: "AVI", accept: ".avi", type: "video" }, { val: "mkv", label: "MKV", accept: ".mkv", type: "video" }, { val: "mov", label: "MOV", accept: ".mov", type: "video" }, { val: "mp4", label: "MP4", accept: ".mp4", type: "video" }, { val: "webm", label: "WEBM", accept: ".webm", type: "video" }] }
         ];
 
         const outputMaps = {
-            'image': [{ val: "bmp", label: "BMP", category: "image" }, { val: "gif", label: "GIF", category: "image" }, { val: "ico", label: "ICO", category: "image" }, { val: "jpg", label: "JPG", category: "image" }, { val: "pdf", label: "PDF", category: "document" }, { val: "png", label: "PNG", category: "image" }, { val: "tiff", label: "TIFF", category: "image" }, { val: "webp", label: "WEBP", category: "image" }],
-            'audio': [{ val: "aac", label: "AAC", category: "audio" }, { val: "aiff", label: "AIFF", category: "audio" }, { val: "flac", label: "FLAC", category: "audio" }, { val: "m4a", label: "M4A", category: "audio" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "ogg", label: "OGG", category: "audio" }, { val: "wav", label: "WAV", category: "audio" }, { val: "wma", label: "WMA", category: "audio" }],
-            'video': [{ val: "avi", label: "AVI", category: "video" }, { val: "gif", label: "GIF", category: "image" }, { val: "flac", label: "FLAC", category: "audio" }, { val: "mkv", label: "MKV", category: "video" }, { val: "mov", label: "MOV", category: "video" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "mp4", label: "MP4", category: "video" }, { val: "webm", label: "WEBM", category: "video" }, { val: "wma", label: "WMA", category: "audio" }, { val: "wmv", label: "WMV", category: "video" }],
+            'image': [{ val: "bmp", label: "BMP", category: "image" }, { val: "gif", label: "GIF", category: "image" }, { val: "ico", label: "ICO", category: "image" }, { val: "jpg", label: "JPG", category: "image" }, { val: "pdf", label: "PDF", category: "document" }, { val: "png", label: "PNG", category: "image" }, { val: "webp", label: "WEBP", category: "image" }],
+            'audio': [{ val: "aac", label: "AAC", category: "audio" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "wav", label: "WAV", category: "audio" }, { val: "flac", label: "FLAC", category: "audio" }],
+            'video': [{ val: "avi", label: "AVI", category: "video" }, { val: "gif", label: "GIF", category: "image" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "mp4", label: "MP4", category: "video" }, { val: "webm", label: "WEBM", category: "video" }],
             'doc': [{ val: "jpg", label: "JPG", category: "image" }, { val: "png", label: "PNG", category: "image" }],
             'text': [{ val: "html", label: "HTML", category: "web" }, { val: "pdf", label: "PDF", category: "document" }]
         };
 
+        /**
+         * Renders the split menu layout.
+         * Ensures flex-row is used so filetypes appear NEXT to categories.
+         */
         function renderSplitMenu(containerId, categoriesData, onSelectCallback) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
-            container.className = "flex w-full h-[280px] bg-slate-900"; 
+            // Locked flex row to prevent stacking
+            container.className = "flex flex-row w-full h-[300px] bg-slate-900"; 
+            
             const sideBar = document.createElement('div');
-            sideBar.className = "w-1/2 bg-slate-900 border-r border-slate-700 overflow-y-auto py-2"; 
+            sideBar.className = "w-2/5 bg-slate-900 border-r border-slate-700 overflow-y-auto py-2 custom-scroll"; 
+            
             const contentArea = document.createElement('div');
-            contentArea.className = "w-1/2 overflow-y-auto custom-scroll";
+            contentArea.className = "w-3/5 overflow-y-auto custom-scroll bg-slate-900/40";
 
             const renderRightSide = (formats) => {
                 contentArea.innerHTML = '';
@@ -459,8 +494,8 @@
                 list.className = "flex flex-col";
                 formats.forEach(fmt => {
                     const btn = document.createElement('button');
-                    btn.className = "w-full text-left px-4 py-3 hover:bg-slate-800 flex items-center justify-between transition-colors border-b border-slate-800/60 last:border-0";
-                    btn.innerHTML = `<span class="text-sm text-slate-300 font-medium">${fmt.label}</span>`;
+                    btn.className = "w-full text-left px-4 py-3 hover:bg-slate-800 transition-colors border-b border-slate-800/60 last:border-0 text-sm text-slate-300 font-medium";
+                    btn.textContent = fmt.label;
                     btn.onclick = (e) => { e.stopPropagation(); onSelectCallback(fmt.val); };
                     list.appendChild(btn);
                 });
@@ -469,8 +504,10 @@
 
             categoriesData.forEach((cat, index) => {
                 const btn = document.createElement('button');
-                btn.className = `w-full text-left px-4 py-3 text-xs font-bold tracking-wider transition-colors border-l-2 ${index === 0 ? 'text-emerald-400 bg-slate-800/50 border-emerald-500' : 'text-slate-500 border-transparent hover:text-emerald-400 hover:bg-slate-800/30'}`;
+                // Consistently uppercase and bold
+                btn.className = `w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 ${index === 0 ? 'text-emerald-400 bg-slate-800/50 border-emerald-500' : 'text-slate-500 border-transparent hover:text-emerald-400 hover:bg-slate-800/30'}`;
                 btn.textContent = cat.title;
+                
                 btn.onmouseenter = () => {
                     Array.from(sideBar.children).forEach(child => child.className = 'w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 text-slate-500 border-transparent hover:text-emerald-400 hover:bg-slate-800/30');
                     btn.className = 'w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 text-emerald-400 bg-slate-800/50 border-emerald-500';
@@ -479,7 +516,9 @@
                 btn.onclick = (e) => { e.stopPropagation(); btn.onmouseenter(); };
                 sideBar.appendChild(btn);
             });
+            
             if (categoriesData.length > 0) renderRightSide(categoriesData[0].formats);
+            
             container.appendChild(sideBar);
             container.appendChild(contentArea);
         }
@@ -498,8 +537,7 @@
         }
 
         function selectFrom(val, skipUrlUpdate = false) {
-            const flatInputs = inputCategories.flatMap(c => c.formats);
-            const data = flatInputs.find(f => f.val === val);
+            const data = inputCategories.flatMap(c => c.formats).find(f => f.val === val);
             if (!data) return;
             selectedFrom = val;
             fromBadge.textContent = val.toUpperCase();
@@ -507,9 +545,20 @@
             fromMenu.classList.add('hidden');
             fileInputUniv.accept = data.accept;
             document.getElementById('univ-subtitle').textContent = `Supports ${data.label} files`;
-            renderToMenu(data.type);
-            const options = (outputMaps[data.type] || []).filter(opt => opt.val !== val);
-            if(options[0]) selectTo(options[0].val, skipUrlUpdate);
+            
+            // Re-render "To" menu based on new "From" selection type
+            const grouped = {};
+            (outputMaps[data.type] || []).filter(opt => opt.val !== val).forEach(opt => {
+                if(!grouped[opt.category]) grouped[opt.category] = [];
+                grouped[opt.category].push(opt);
+            });
+            const sortedCatNames = Object.keys(grouped).sort();
+            const categoriesData = sortedCatNames.map(catName => ({ title: catName, formats: grouped[catName] }));
+            renderSplitMenu('to-grid', categoriesData, selectTo);
+
+            // Auto-select first available "To" format if none selected
+            const firstOpt = (outputMaps[data.type] || []).find(o => o.val !== val);
+            if(firstOpt) selectTo(firstOpt.val, skipUrlUpdate);
             
             if (!skipUrlUpdate) updateUrl();
         }
@@ -523,10 +572,9 @@
             if (!skipUrlUpdate) updateUrl();
         }
 
-        /**
-         * Updates Browser State for SEO & Search indexing
-         */
         function updateUrl() {
+            if (!selectedFrom || !selectedTo) return;
+
             const flat = inputCategories.flatMap(c => c.formats);
             const fromData = flat.find(f => f.val === selectedFrom);
             if (!fromData) return;
@@ -555,15 +603,14 @@
         }
 
         function swapFormats() {
+            if (!selectedFrom || !selectedTo) return;
             const oldFrom = selectedFrom;
             const oldTo = selectedTo;
-            const flatInputs = inputCategories.flatMap(c => c.formats);
-            const isValidInput = flatInputs.find(f => f.val === oldTo);
-            if (!isValidInput) { showMessage(`Cannot swap: '${oldTo.toUpperCase()}' isn't a valid input.`, true); return; }
+            const flatInputs = inputCategories.flatMap(c => c.formats).find(f => f.val === oldTo);
+            if (!flatInputs) { showMessage(`Cannot swap: '${oldTo.toUpperCase()}' isn't a valid input.`, true); return; }
             selectFrom(oldTo);
-            const outputOpts = outputMaps[isValidInput.type] || [];
+            const outputOpts = outputMaps[flatInputs.type] || [];
             if (outputOpts.find(o => o.val === oldFrom)) selectTo(oldFrom);
-            else showMessage(`Cannot convert ${oldTo.toUpperCase()} back to ${oldFrom.toUpperCase()}`, true);
         }
 
         function renderSeoLinks() {
@@ -610,6 +657,10 @@
         }
 
         async function handleFiles(files) {
+            if (!selectedFrom || !selectedTo) {
+                showMessage("Please select a conversion type first.", true);
+                return;
+            }
             if (files.length === 0) return;
             resultsAreaUniv.classList.remove('hidden');
             for (const file of files) {
@@ -619,18 +670,12 @@
                 const task = async () => {
                     const statusEl = document.getElementById('status-' + id);
                     if(statusEl) statusEl.textContent = "Processing to " + currentTarget.toUpperCase() + "...";
-                    const ffmpegFormats = ['mp4','mp3','aac','wav','ogg','m4a','wma','aiff','flac','gif','bmp','tiff','ico','avi','mov','mkv','webm','wmv'];
-                    if (file.type.startsWith('video/') || file.type.startsWith('audio/') || ffmpegFormats.includes(currentTarget)) {
-                        await processMediaWorker(file, currentTarget, id);
-                    } else if (file.type.startsWith('image/') && currentTarget !== 'pdf') {
-                        await new Promise(r => processImage(file, currentTarget, id, 0.9, r));
-                    } else if (file.type.startsWith('image/') && currentTarget === 'pdf') {
-                        await new Promise(r => processImage(file, 'pdf', id, 0.9, r));
-                    } else if (file.type === 'application/pdf') {
-                        if(['jpg','png'].includes(currentTarget)) await processPdfExtract(file, currentTarget, id);
-                    } else if (file.name.endsWith('.md') || file.name.endsWith('.txt')) {
-                        await processText(file, currentTarget, id);
-                    } else markItemError(id, "Unsupported format.");
+                    const ffmpegFormats = ['mp4','mp3','aac','wav','mkv','webm','avi','mov','gif','ico','wmv','flac'];
+                    if (ffmpegFormats.includes(currentTarget)) await processMediaWorker(file, currentTarget, id);
+                    else if (file.type.startsWith('image/') || currentTarget === 'pdf') await new Promise(r => processImage(file, currentTarget, id, r));
+                    else if (file.type === 'application/pdf') await processPdfExtract(file, currentTarget, id);
+                    else if (file.name.endsWith('.md') || file.name.endsWith('.txt')) await processText(file, currentTarget, id);
+                    else markItemError(id, "Unsupported format.");
                 };
                 conversionQueue.push(task);
             }
@@ -657,6 +702,7 @@
                 cancelCurrentTask = () => { reject("Cancelled"); };
                 const worker = createWorker();
                 currentWorker = worker;
+                
                 worker.onmessage = function(e) {
                     const msg = e.data;
                     if (msg.type === 'progress') {
@@ -665,13 +711,12 @@
                         ffmpegStatus.textContent = `${pct}%`;
                         ffmpegProgress.style.width = `${pct}%`;
                     } else if (msg.type === 'done') {
-                        const blob = new Blob([msg.buffer], { type: `video/${msg.format}` });
-                        finalizeItem(msg.id, file.name, msg.format, blob);
+                        finalizeItem(msg.id, file.name, msg.format, new Blob([msg.buffer]));
                         worker.terminate();
                         ffmpegLoader.classList.add('hidden');
                         resolve();
                     } else if (msg.type === 'error') {
-                        markItemError(msg.id, msg.msg || "Conversion failed");
+                        markItemError(msg.id, "Local engine error.");
                         worker.terminate();
                         ffmpegLoader.classList.add('hidden');
                         resolve(); 
@@ -685,7 +730,7 @@
             });
         }
 
-        function processImage(file, format, id, quality, callback) {
+        function processImage(file, format, id, callback) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const img = new Image();
@@ -694,16 +739,15 @@
                         const doc = new jspdf.jsPDF({ orientation: img.width > img.height ? 'l' : 'p', unit: 'px', format: [img.width, img.height] });
                         doc.addImage(img, 'JPEG', 0, 0, img.width, img.height);
                         finalizeItem(id, file.name, 'pdf', doc.output('blob'));
-                        if(callback) callback();
-                        return;
+                    } else {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width; canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        if (!['png', 'webp', 'ico'].includes(format)) { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob(blob => finalizeItem(id, file.name, format, blob), `image/${format==='jpg'?'jpeg':format}`, 0.9);
                     }
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width; canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    if (!['png', 'webp', 'ico'].includes(format)) { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-                    ctx.drawImage(img, 0, 0);
-                    let mime = `image/${format === 'jpg' ? 'jpeg' : format === 'ico' ? 'png' : format}`;
-                    canvas.toBlob(blob => { finalizeItem(id, file.name, format, blob); if(callback) callback(); }, mime, parseFloat(quality));
+                    if(callback) callback();
                 };
                 img.src = event.target.result;
             };
@@ -737,10 +781,7 @@
                 renderDiv.innerHTML = marked.parse(text);
                 const canvas = await html2canvas(renderDiv, { scale: 2 });
                 const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-                const imgData = canvas.toDataURL('image/png');
-                const props = pdf.getImageProperties(imgData);
-                const pdfHeight = (props.height * 210) / props.width;
-                pdf.addImage(imgData, 'PNG', 0, 0, 210, pdfHeight);
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
                 finalizeItem(id, file.name, 'pdf', pdf.output('blob'));
                 renderDiv.innerHTML = '';
             }
@@ -779,24 +820,26 @@
             const div = document.getElementById(id);
             if (!div) return;
             div.className = "flex items-center justify-between bg-slate-900/50 p-3 rounded-lg border border-slate-700 opacity-60";
-            div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="slash" class="text-slate-500 h-4 w-4"></i><div><div class="text-sm font-medium text-slate-400">Cancelled</div><div class="text-[10px] text-slate-600">Process stopped by user</div></div></div>`;
+            div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="slash" class="text-slate-500 h-4 w-4"></i><div><div class="text-sm font-medium text-slate-400">Cancelled</div></div></div>`;
             lucide.createIcons();
         }
 
         function cancelAll() {
-            const pendingIds = [];
+            if(currentWorker) {
+                currentWorker.terminate();
+                currentWorker = null;
+            }
+            if(cancelCurrentTask) {
+                try { cancelCurrentTask(); } catch(e){}
+                cancelCurrentTask = null;
+            }
+            conversionQueue = [];
+            isProcessing = false;
+            
             document.querySelectorAll('[id^="status-"]').forEach(el => {
                 const id = el.id.replace('status-', '');
-                const parent = document.getElementById(id);
-                if (parent && (parent.classList.contains('animate-pulse') || parent.querySelector('.animate-spin'))) {
-                    pendingIds.push(id);
-                }
+                markItemCancelled(id);
             });
-
-            if(currentWorker) { currentWorker.terminate(); currentWorker = null; }
-            if(cancelCurrentTask) { try { cancelCurrentTask(); } catch(e){} cancelCurrentTask = null; }
-            conversionQueue = []; isProcessing = false;
-            pendingIds.forEach(id => markItemCancelled(id));
             ffmpegLoader.classList.add('hidden');
         }
 
@@ -833,13 +876,16 @@
                     }
                 }
             } else {
-                updateUrl();
+                fromBadge.textContent = "...";
+                fromLabel.textContent = "Select";
+                toBadge.textContent = "...";
+                toLabel.textContent = "Select";
+                document.getElementById('hero-main-heading').textContent = "Universal Local Converter";
             }
         }
 
         function initSelectors() { 
             renderFromMenu(); 
-            selectFrom('jpg', true); 
             handleUrlParams();
             renderSeoLinks();
         }
