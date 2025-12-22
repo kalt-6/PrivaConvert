@@ -6,13 +6,16 @@
     <title>PrivaConvert | The Ultimate Local Converter Suite</title>
     <meta name="description" id="meta-desc" content="A completely private, local file conversion suite. Convert images, audio, video, and documents securely in your browser with zero server uploads using WebAssembly technology.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Libraries -->
+    <!-- Libraries for Conversion -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -20,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- Structured Data -->
+    <!-- Structured Data for Google Search -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,6 +31,11 @@
       "name": "PrivaConvert",
       "operatingSystem": "Web Browser",
       "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
       "description": "Convert images, audio, video, and documents locally in your browser with zero server uploads."
     }
     </script>
@@ -65,7 +73,9 @@
     <!-- Notification UI -->
     <div id="app-message" class="fixed bottom-10 left-1/2 z-[200]">
         <div class="glass-panel bg-slate-900 border border-emerald-500/30 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
-            <div class="bg-emerald-500/20 p-1.5 rounded-full"><i data-lucide="info" id="message-icon" class="h-4 w-4 text-emerald-400"></i></div>
+            <div class="bg-emerald-500/20 p-1.5 rounded-full">
+                <i data-lucide="info" id="message-icon" class="h-4 w-4 text-emerald-400"></i>
+            </div>
             <span id="message-text" class="text-sm font-semibold tracking-wide"></span>
         </div>
     </div>
@@ -265,12 +275,20 @@
 
         const outputMaps = {
             'image': [{ val: "bmp", label: "BMP", category: "image" }, { val: "gif", label: "GIF", category: "image" }, { val: "ico", label: "ICO", category: "image" }, { val: "jpg", label: "JPG", category: "image" }, { val: "pdf", label: "PDF", category: "document" }, { val: "png", label: "PNG", category: "image" }, { val: "tiff", label: "TIFF", category: "image" }, { val: "webp", label: "WEBP", category: "image" }],
-            'audio': [{ val: "aac", label: "AAC", category: "audio" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "wav", label: "WAV", category: "audio" }, { val: "flac", label: "FLAC", category: "audio" }],
+            'audio': [{ val: "aac", label: "AAC", category: "audio" }, { val: "aiff", label: "AIFF", category: "audio" }, { val: "flac", label: "FLAC", category: "audio" }, { val: "m4a", label: "M4A", category: "audio" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "ogg", label: "OGG", category: "audio" }, { val: "wav", label: "WAV", category: "audio" }, { val: "wma", label: "WMA", category: "audio" }],
             'video': [{ val: "avi", label: "AVI", category: "video" }, { val: "gif", label: "GIF", category: "image" }, { val: "flac", label: "FLAC", category: "audio" }, { val: "mkv", label: "MKV", category: "video" }, { val: "mov", label: "MOV", category: "video" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "mp4", label: "MP4", category: "video" }, { val: "webm", label: "WEBM", category: "video" }, { val: "wma", label: "WMA", category: "audio" }, { val: "wmv", label: "WMV", category: "video" }],
-            'doc': [{ val: "jpg", label: "JPG", category: "image" }, { val: "png", label: "PNG", category: "image" }, { val: "webp", label: "WEBP", category: "image" }, { val: "txt", label: "TXT", category: "document" }, { val: "md", label: "MD", category: "document" }, { val: "html", label: "HTML", category: "web" }],
+            'doc': [
+                { val: "jpg", label: "JPG", category: "image" }, 
+                { val: "png", label: "PNG", category: "image" },
+                { val: "webp", label: "WEBP", category: "image" },
+                { val: "txt", label: "TXT", category: "document" },
+                { val: "md", label: "MD", category: "document" },
+                { val: "html", label: "HTML", category: "web" }
+            ],
             'text': [{ val: "html", label: "HTML", category: "web" }, { val: "pdf", label: "PDF", category: "document" }]
         };
 
+        // --- UI Logic ---
         function renderSplitMenu(containerId, categoriesData, onSelectCallback) {
             const container = document.getElementById(containerId); 
             if(!container) return;
@@ -366,7 +384,7 @@
         function renderSeoLinks() {
             const container = document.getElementById('seo-links-container');
             if (!container) return;
-            const popular = [ {f:'png',t:'ico'}, {f:'jpg',t:'png'}, {f:'mp4',t:'mp3'}, {f:'pdf',t:'jpg'}, {f:'webp',t:'png'}, {f:'mov',t:'mp4'}, {f:'wav',t:'mp3'}, {f:'md',t:'pdf'}, {f:'tiff',t:'png'}, {f:'mp4',t:'webm'}, {f:'png',t:'pdf'}, {f:'jpg',t:'ico'}, {f:'mov',t:'gif'}, {f:'mp3',t:'wav'}, {f:'pdf',t:'webp'}, {f:'jpg',t:'pdf'}, {f:'png',t:'webp'}, {f:'gif',t:'webp'} ];
+            const popular = [ {f:'png',t:'ico'}, {f:'jpg',t:'png'}, {f:'mp4',t:'mp3'}, {f:'pdf',t:'jpg'}, {f:'webp',t:'png'}, {f:'mov',t:'mp4'}, {f:'wav',t:'mp3'}, {f:'md',t:'pdf'}, {f:'tiff',t:'png'}, {f:'mp4',t:'webm'}, {f:'png',t:'pdf'}, {f:'aac',t:'mp3'}, {f:'bmp',t:'jpg'}, {f:'pdf',t:'png'}, {f:'m4a',t:'mp3'}, {f:'mkv',t:'mp4'}, {f:'wav',t:'flac'}, {f:'png',t:'jpg'}, {f:'txt',t:'pdf'}, {f:'jpg',t:'ico'}, {f:'mov',t:'gif'}, {f:'mp3',t:'wav'}, {f:'pdf',t:'webp'}, {f:'jpg',t:'pdf'}, {f:'png',t:'webp'}, {f:'gif',t:'webp'} ];
             popular.forEach(pair => {
                 const a = document.createElement('a'); a.href = `/?from=${pair.f}&to=${pair.t}`;
                 a.className = "bg-slate-900/50 border border-slate-800 hover:border-emerald-500/40 p-3 rounded-xl text-center text-[11px] font-semibold text-slate-400 hover:text-emerald-400 transition-all";
