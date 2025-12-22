@@ -4,24 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrivaConvert | The Ultimate Local Converter Suite</title>
-    
-    <!-- Primary SEO -->
     <meta name="description" id="meta-desc" content="A completely private, local file conversion suite. Convert images, audio, video, and documents securely in your browser with zero server uploads using WebAssembly technology.">
-    <meta name="keywords" content="file converter, local converter, privacy, image converter, video converter, audio converter, pdf converter, no upload converter">
-    
-    <!-- Open Graph / Social Media SEO -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="PrivaConvert | Local & Private File Conversion">
-    <meta property="og:description" content="Convert your files safely in your browser. No uploads, no servers, 100% private.">
-    <meta property="og:image" content="logo.png">
-    
-    <!-- Resource Hints -->
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://unpkg.com">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="logo.png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,7 +12,7 @@
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Libraries for Conversion -->
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -37,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- Structured Data for Google Search -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -45,11 +28,6 @@
       "name": "PrivaConvert",
       "operatingSystem": "Web Browser",
       "applicationCategory": "MultimediaApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
       "description": "Convert images, audio, video, and documents locally in your browser with zero server uploads."
     }
     </script>
@@ -59,18 +37,10 @@
             theme: {
                 extend: {
                     colors: {
-                        slate: {
-                            850: '#151e2e',
-                            900: '#0f172a',
-                            950: '#020617',
-                        },
-                        emerald: {
-                            450: '#10b981',
-                        }
+                        slate: { 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
+                        emerald: { 450: '#10b981' }
                     },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }
+                    animation: { 'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
                 }
             }
         }
@@ -78,71 +48,24 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #e2e8f0;
-            scroll-behavior: smooth;
-        }
-
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .drop-zone {
-            transition: all 0.3s ease;
-            border: 2px dashed #334155;
-            background-color: rgba(15, 23, 42, 0.3);
-        }
-
-        .drop-zone.active {
-            background-color: rgba(16, 185, 129, 0.1);
-            border-color: #10b981;
-            transform: scale(1.01);
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; scroll-behavior: smooth; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .drop-zone { transition: all 0.3s ease; border: 2px dashed #334155; background-color: rgba(15, 23, 42, 0.3); }
+        .drop-zone.active { background-color: rgba(16, 185, 129, 0.1); border-color: #10b981; transform: scale(1.01); }
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-        #hidden-render {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            width: 794px;
-            min-height: 1123px;
-            background: white;
-            color: black;
-            padding: 40px;
-            font-family: serif;
-        }
-        
-        #app-message {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translate(-50%, 20px);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        #app-message.show {
-            transform: translate(-50%, 0);
-            opacity: 1;
-            visibility: visible;
-        }
+        #hidden-render { position: absolute; top: -9999px; left: -9999px; width: 794px; padding: 40px; }
+        #app-message { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translate(-50%, 20px); opacity: 0; visibility: hidden; pointer-events: none; }
+        #app-message.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
 
-    <!-- Message UI -->
+    <!-- Notification UI -->
     <div id="app-message" class="fixed bottom-10 left-1/2 z-[200]">
         <div class="glass-panel bg-slate-900 border border-emerald-500/30 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
-            <div class="bg-emerald-500/20 p-1.5 rounded-full">
-                <i data-lucide="info" id="message-icon" class="h-4 w-4 text-emerald-400"></i>
-            </div>
+            <div class="bg-emerald-500/20 p-1.5 rounded-full"><i data-lucide="info" id="message-icon" class="h-4 w-4 text-emerald-400"></i></div>
             <span id="message-text" class="text-sm font-semibold tracking-wide"></span>
         </div>
     </div>
@@ -169,46 +92,27 @@
 
     <main class="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
         
-        <!-- Background Decor -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/5 rounded-full blur-[120px]"></div>
             <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px]"></div>
         </div>
 
-        <!-- Hero Section -->
         <div class="text-center mb-10 max-w-3xl mx-auto space-y-4">
-            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight" id="hero-main-heading">
-                Universal Local Converter
-            </h1>
-            <h2 class="text-2xl font-semibold">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600" id="hero-title">Completely Private.</span>
-            </h2>
-            <!-- Site Description -->
-            <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">
-                PrivaConvert is a completely private, local file conversion suite. Unlike other tools, your files are processed directly on your device using WebAssembly technology. This means your data never touches a server, keeping your sensitive information 100% secure.
-            </p>
-            <p class="text-slate-500 text-sm font-medium" id="hero-support-text">
-                Convert images, audio, video, and documents with no size limits and zero data tracking.
-            </p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight" id="hero-main-heading">Any Format. Any Time.</h1>
+            <h2 class="text-2xl font-semibold"><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600" id="hero-title">Completely Private.</span></h2>
+            <p class="text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto">PrivaConvert is a completely private, local file conversion suite. Unlike other tools, your files are processed directly on your device using WebAssembly technology. This means your data never touches a server, keeping your sensitive information 100% secure.</p>
+            <p class="text-slate-500 text-sm font-medium">Convert images, audio, video, and documents with no size limits and zero data tracking.</p>
         </div>
 
         <div class="w-full max-w-4xl glass-panel rounded-2xl shadow-2xl overflow-hidden relative" id="app-container">
-            
-            <!-- UNIVERSAL CONVERTER -->
             <div id="tool-universal" class="tool-view">
-                
-                <!-- Dual-Selector Toolbar -->
                 <div class="bg-slate-900/50 p-6 border-b border-white/5 flex flex-col items-center justify-center gap-6 relative">
-                    
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
-                        <!-- FROM Selector -->
-                        <div class="relative w-full sm:w-56 z-50">
+                        <!-- FROM -->
+                        <div class="relative w-full sm:w-48 z-50">
                             <label class="text-[10px] uppercase text-slate-500 font-bold mb-1 ml-1 block">Convert</label>
                             <button id="from-selector-btn" class="w-full bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white text-sm rounded-lg p-3 flex items-center justify-between transition-all group">
-                                <span class="flex items-center gap-2">
-                                    <span class="bg-slate-700 p-1 rounded text-emerald-400 text-xs font-bold w-12 text-center" id="from-format-badge">...</span>
-                                    <span id="from-format-label" class="truncate">Select</span>
-                                </span>
+                                <span class="flex items-center gap-2"><span class="bg-slate-700 p-1 rounded text-emerald-400 text-xs font-bold w-12 text-center" id="from-format-badge">...</span><span id="from-format-label" class="truncate">Select</span></span>
                                 <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors"></i>
                             </button>
                             <div id="from-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[320px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
@@ -216,19 +120,16 @@
                             </div>
                         </div>
 
-                        <!-- Swap Button -->
+                        <!-- Swap -->
                         <button onclick="swapFormats()" class="p-2.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-emerald-500/50 text-slate-400 hover:text-emerald-400 transition-all shadow-lg active:scale-90 group mt-4 sm:mt-4">
                             <i data-lucide="arrow-right-left" class="h-4 w-4 group-hover:rotate-180 transition-transform duration-500"></i>
                         </button>
 
-                        <!-- TO Selector -->
-                        <div class="relative w-full sm:w-56 z-40">
+                        <!-- TO -->
+                        <div class="relative w-full sm:w-48 z-40">
                             <label class="text-[10px] uppercase text-slate-500 font-bold mb-1 ml-1 block">Into</label>
                             <button id="to-selector-btn" class="w-full bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white text-sm rounded-lg p-3 flex items-center justify-between transition-all group">
-                                <span class="flex items-center gap-2">
-                                    <span class="bg-slate-700 p-1 rounded text-emerald-400 text-xs font-bold w-12 text-center" id="to-format-badge">...</span>
-                                    <span id="to-format-label" class="truncate">Select</span>
-                                </span>
+                                <span class="flex items-center gap-2"><span class="bg-slate-700 p-1 rounded text-emerald-400 text-xs font-bold w-12 text-center" id="to-format-badge">...</span><span id="to-format-label" class="truncate">Select</span></span>
                                 <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400 group-hover:text-emerald-500 transition-colors"></i>
                             </button>
                             <div id="to-selector-menu" class="hidden absolute top-full left-0 mt-2 w-[320px] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[100]">
@@ -238,181 +139,85 @@
                     </div>
                 </div>
 
-                <!-- Drop Zone -->
                 <div class="p-8">
                     <div id="drop-zone-univ" class="drop-zone relative rounded-2xl h-64 flex flex-col items-center justify-center cursor-pointer group" title="Click to open file explorer">
                         <input type="file" id="file-input-univ" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" multiple title="Click to open file explorer">
-                        
                         <div class="z-0 flex flex-col items-center space-y-4 pointer-events-none transition-transform group-hover:scale-105">
-                            <div class="p-4 bg-slate-800 rounded-full border border-slate-700 shadow-xl group-hover:border-emerald-500/50 transition-colors">
-                                <i data-lucide="upload-cloud" class="h-10 w-10 text-emerald-500"></i>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-lg font-medium text-white group-hover:text-emerald-400 transition-colors">Click or drag files here</p>
-                                <p class="text-sm text-slate-500 mt-1" id="univ-subtitle">Please select a file type above</p>
-                            </div>
+                            <div class="p-4 bg-slate-800 rounded-full border border-slate-700 shadow-xl group-hover:border-emerald-500/50 transition-colors"><i data-lucide="upload-cloud" class="h-10 w-10 text-emerald-500"></i></div>
+                            <div class="text-center"><p class="text-lg font-medium text-white group-hover:text-emerald-400 transition-colors">Click or drag files here</p><p class="text-sm text-slate-500 mt-1" id="univ-subtitle">Matching selected input format</p></div>
                         </div>
                     </div>
 
-                    <!-- Progress Bar -->
                     <div id="ffmpeg-loader" class="hidden mt-4 bg-slate-800/50 p-3 rounded-lg border border-slate-700 relative">
-                        <button onclick="cancelAll()" class="absolute -top-2 -right-2 bg-slate-700 hover:bg-red-500 text-white rounded-full p-1.5 border border-slate-600 shadow-md transition-colors z-10" title="Cancel All">
-                            <i data-lucide="x" class="h-3 w-3"></i>
-                        </button>
-                        
-                        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-                            <span id="ffmpeg-label">Initializing Media Engine...</span>
-                            <span id="ffmpeg-status">0%</span>
-                        </div>
-                        <div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden">
-                            <div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%" id="ffmpeg-progress"></div>
-                        </div>
+                        <button onclick="cancelAll()" class="absolute -top-2 -right-2 bg-slate-700 hover:bg-red-500 text-white rounded-full p-1.5 border border-slate-600 shadow-md transition-colors z-10" title="Cancel All"><i data-lucide="x" class="h-3 w-3"></i></button>
+                        <div class="flex items-center justify-between text-xs text-slate-400 mb-2"><span id="ffmpeg-label">Initializing Media Engine...</span><span id="ffmpeg-status">0%</span></div>
+                        <div class="w-full bg-slate-700 rounded-full h-1.5 overflow-hidden"><div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%" id="ffmpeg-progress"></div></div>
                     </div>
 
-                    <!-- Results -->
                     <div id="results-area-univ" class="hidden mt-8 space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                            <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Queue</h3>
-                            <button onclick="clearAll('univ')" class="text-xs text-red-400 hover:text-red-300 transition-colors">Clear All</button>
-                        </div>
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2"><h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Queue</h3><button onclick="clearAll('univ')" class="text-xs text-red-400 hover:text-red-300 transition-colors">Clear All</button></div>
                         <div id="file-list-univ" class="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scroll"></div>
-                        <div class="flex justify-end pt-4">
-                            <button id="download-all-univ" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2 active:scale-95">
-                                <i data-lucide="download"></i> Download All (.zip)
-                            </button>
-                        </div>
+                        <div class="flex justify-end pt-4"><button id="download-all-univ" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2 active:scale-95"><i data-lucide="download"></i> Download All (.zip)</button></div>
                     </div>
                 </div>
             </div>
-
-            <!-- Footer Banner -->
-            <div class="bg-slate-900 border-t border-slate-800 p-3 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-                <i data-lucide="lock" class="h-3 w-3"></i>
-                <span>Zero-Knowledge Architecture: NO DATA LEAVES YOUR DEVICE</span>
-            </div>
+            <div class="bg-slate-900 border-t border-slate-800 p-3 flex items-center justify-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold"><i data-lucide="lock" class="h-3 w-3"></i><span>Zero-Knowledge Architecture: NO DATA LEAVES YOUR DEVICE</span></div>
         </div>
 
-        <!-- Popular Converters (SEO Anchors) -->
         <section class="w-full max-w-5xl mt-16 px-4">
             <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 text-center">Popular Conversion Tools</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="seo-links-container">
-                <!-- Links generated via JS -->
-            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="seo-links-container"></div>
         </section>
-
     </main>
 
     <footer class="bg-slate-950 border-t border-slate-800 py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-500 text-sm">PrivaConvert &copy; 2025 — Secure Local File Utility</p>
-        </div>
+        <div class="max-w-7xl mx-auto px-4 text-center"><p class="text-slate-500 text-sm">PrivaConvert &copy; 2025 — Secure Local File Utility</p></div>
     </footer>
 
     <div id="hidden-render"></div>
 
     <script id="worker-script" type="javascript/worker">
         self.window = self;
-        self.document = {
-            createElement: () => ({
-                style: {},
-                setAttribute: () => {},
-                appendChild: () => {}
-            }),
-            getElementsByTagName: () => [],
-            head: { appendChild: () => {} }
-        };
-
+        self.document = { createElement: () => ({ style: {}, setAttribute: () => {}, appendChild: () => {} }), getElementsByTagName: () => [], head: { appendChild: () => {} } };
         importScripts('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js');
-
         self.onmessage = async function(e) {
             const { type, data } = e.data;
             if (type !== 'start') return;
-
             const { fileData, fileName, outputFormat, id } = data;
-
             let ffmpeg = null;
-
             try {
-                ffmpeg = self.FFmpeg.createFFmpeg({
-                    log: true,
-                    corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
-                    mainName: 'main'
-                });
-
-                ffmpeg.setProgress(({ ratio }) => {
-                    self.postMessage({ type: 'progress', ratio });
-                });
-
+                ffmpeg = self.FFmpeg.createFFmpeg({ log: false, corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js', mainName: 'main' });
+                ffmpeg.setProgress(({ ratio }) => { self.postMessage({ type: 'progress', ratio }); });
                 await ffmpeg.load();
-
                 const ext = fileName.split('.').pop().toLowerCase();
                 const inputName = 'input.' + ext;
                 const outputName = 'output.' + outputFormat;
-
                 ffmpeg.FS('writeFile', inputName, new Uint8Array(fileData));
-
-                let args = ['-i', inputName];
-                args.push('-strict', '-2');
-                
-                if (['mp4','mkv','mov','avi'].includes(outputFormat)) {
-                    args.push('-preset', 'superfast');
-                    args.push('-crf', '25'); 
-                    args.push('-tune', 'zerolatency'); 
-                }
-
+                let args = ['-i', inputName, '-strict', '-2'];
+                if (['mp4','mkv','mov','avi'].includes(outputFormat)) { args.push('-preset', 'superfast', '-crf', '25', '-tune', 'zerolatency'); }
                 if (outputFormat === 'gif') {
                     const isVideo = ['mp4','mkv','avi','mov','webm','wmv'].includes(ext);
-                    if(isVideo) args.push('-vf', 'fps=10,scale=320:-2');
-                    else args.push('-vf', 'scale=320:-2');
-                } else if (outputFormat === 'ico') {
-                     args.push('-vf', 'scale=min(256\\,iw):min(256\\,ih):force_original_aspect_ratio=decrease');
-                } else if (outputFormat === 'mp3') {
-                    args.push('-acodec', 'libmp3lame', '-q:a', '2');
-                } else if (outputFormat === 'aac' || outputFormat === 'm4a') {
-                     args.push('-acodec', 'aac');
-                } else if (outputFormat === 'wav') {
-                     args.push('-acodec', 'pcm_s16le');
-                } else if (outputFormat === 'aiff') {
-                     args.push('-acodec', 'pcm_s16be');
-                } else if (outputFormat === 'flac') {
-                     args.push('-acodec', 'flac');
-                } else if (outputFormat === 'wma') {
-                     args.push('-acodec', 'wmav2');
-                } else if (outputFormat === 'wmv') {
-                     args.push('-c:v', 'wmv2', '-c:a', 'wmav2', '-q:v', '8');
-                } else if (outputFormat === 'webm') {
-                     args.push('-crf', '30', '-b:v', '0', '-deadline', 'realtime');
-                }
-
+                    if(isVideo) args.push('-vf', 'fps=10,scale=320:-2'); else args.push('-vf', 'scale=320:-2');
+                } else if (outputFormat === 'ico') { args.push('-vf', 'scale=min(256\\,iw):min(256\\,ih):force_original_aspect_ratio=decrease'); }
+                else if (outputFormat === 'mp3') { args.push('-acodec', 'libmp3lame', '-q:a', '2'); }
+                else if (outputFormat === 'aac' || outputFormat === 'm4a') { args.push('-acodec', 'aac'); }
+                else if (outputFormat === 'wav') { args.push('-acodec', 'pcm_s16le'); }
+                else if (outputFormat === 'aiff') { args.push('-acodec', 'pcm_s16be'); }
+                else if (outputFormat === 'flac') { args.push('-acodec', 'flac'); }
+                else if (outputFormat === 'wma') { args.push('-acodec', 'wmav2'); }
+                else if (outputFormat === 'wmv') { args.push('-c:v', 'wmv2', '-c:a', 'wmav2', '-q:v', '8'); }
+                else if (outputFormat === 'webm') { args.push('-crf', '30', '-b:v', '0', '-deadline', 'realtime'); }
                 args.push('-y', outputName);
-
-                try {
-                    await ffmpeg.run(...args);
-                } catch(runErr) {
-                    if (!(runErr && (runErr.message === 'Program terminated with exit(0)' || runErr.status === 0))) {
-                        throw runErr;
-                    }
-                }
-
+                try { await ffmpeg.run(...args); } catch(runErr) { if (!(runErr && (runErr.message === 'Program terminated with exit(0)' || runErr.status === 0))) throw runErr; }
                 const outData = ffmpeg.FS('readFile', outputName);
-                if(outData.length === 0) throw new Error("Output file is empty");
-
                 self.postMessage({ type: 'done', id, buffer: outData.buffer, format: outputFormat }, [outData.buffer]);
-                
-            } catch (err) {
-                self.postMessage({ type: 'error', id, msg: err.message });
-            } finally {
-                if(ffmpeg) {
-                    try { ffmpeg.exit(); } catch(e){}
-                }
-            }
+            } catch (err) { self.postMessage({ type: 'error', id, msg: err.message }); }
+            finally { if(ffmpeg) { try { ffmpeg.exit(); } catch(e){} } }
         };
     </script>
 
     <script>
-        // --- Globals ---
         lucide.createIcons();
-        
         const dropZoneUniv = document.getElementById('drop-zone-univ');
         const fileInputUniv = document.getElementById('file-input-univ');
         const resultsAreaUniv = document.getElementById('results-area-univ');
@@ -422,7 +227,6 @@
         const ffmpegProgress = document.getElementById('ffmpeg-progress');
         const ffmpegStatus = document.getElementById('ffmpeg-status');
         const ffmpegLabel = document.getElementById('ffmpeg-label');
-        
         const fromBtn = document.getElementById('from-selector-btn');
         const fromMenu = document.getElementById('from-selector-menu');
         const fromBadge = document.getElementById('from-format-badge');
@@ -432,17 +236,13 @@
         const toBadge = document.getElementById('to-format-badge'); 
         const toLabel = document.getElementById('to-format-label'); 
 
-        let selectedFrom = null;
-        let selectedTo = null;
-        let processedFiles = []; 
-        let conversionQueue = [];
-        let isProcessing = false;
-        
-        let cancelCurrentTask = null; 
-        let currentWorker = null; 
+        let selectedFrom = 'jpg'; let selectedTo = 'png'; let processedFiles = []; 
+        let conversionQueue = []; let isProcessing = false;
+        let cancelCurrentTask = null; let currentWorker = null; 
 
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
+        // Helper: Create Worker
         function createWorker() {
             const blob = new Blob([document.getElementById('worker-script').textContent], { type: "text/javascript" });
             return new Worker(URL.createObjectURL(blob));
@@ -456,58 +256,42 @@
             setTimeout(() => msgEl.classList.remove('show'), 3000);
         }
 
-        // Data Structure: Category titles remain lowercase for data handling but are transformed via CSS
         const inputCategories = [
-            { title: "audio", formats: [{ val: "aac", label: "AAC", accept: ".aac", type: "audio" }, { val: "mp3", label: "MP3", accept: ".mp3", type: "audio" }, { val: "wav", label: "WAV", accept: ".wav", type: "audio" }, { val: "flac", label: "FLAC", accept: ".flac", type: "audio" }] },
-            { title: "document", formats: [{ val: "md", label: "MD", accept: ".md", type: "text" }, { val: "pdf", label: "PDF", accept: ".pdf", type: "doc" }, { val: "txt", label: "TXT", accept: ".txt", type: "text" }] },
-            { title: "image", formats: [{ val: "bmp", label: "BMP", accept: ".bmp", type: "image" }, { val: "gif", label: "GIF", accept: ".gif", type: "image" }, { val: "ico", label: "ICO", accept: ".ico", type: "image" }, { val: "jpg", label: "JPG", accept: ".jpg,.jpeg", type: "image" }, { val: "png", label: "PNG", accept: ".png", type: "image" }, { val: "webp", label: "WEBP", accept: ".webp", type: "image" }] },
-            { title: "video", formats: [{ val: "avi", label: "AVI", accept: ".avi", type: "video" }, { val: "mkv", label: "MKV", accept: ".mkv", type: "video" }, { val: "mov", label: "MOV", accept: ".mov", type: "video" }, { val: "mp4", label: "MP4", accept: ".mp4", type: "video" }, { val: "webm", label: "WEBM", accept: ".webm", type: "video" }] }
+            { title: "audio", formats: [{ val: "aac", label: "AAC", accept: ".aac,audio/aac", type: "audio" }, { val: "aiff", label: "AIFF", accept: ".aiff,.aif,audio/aiff", type: "audio" }, { val: "flac", label: "FLAC", accept: ".flac,audio/flac", type: "audio" }, { val: "m4a", label: "M4A", accept: ".m4a,audio/mp4", type: "audio" }, { val: "mp3", label: "MP3", accept: ".mp3,audio/mpeg", type: "audio" }, { val: "ogg", label: "OGG", accept: ".ogg,audio/ogg", type: "audio" }, { val: "wav", label: "WAV", accept: ".wav,audio/wav", type: "audio" }, { val: "wma", label: "WMA", accept: ".wma,audio/x-ms-wma", type: "audio" }] },
+            { title: "document", formats: [{ val: "md", label: "MD", accept: ".md,text/markdown,text/plain", type: "text" }, { val: "pdf", label: "PDF", accept: ".pdf,application/pdf", type: "doc" }, { val: "txt", label: "TXT", accept: ".txt,text/plain", type: "text" }] },
+            { title: "image", formats: [{ val: "bmp", label: "BMP", accept: ".bmp,image/bmp", type: "image" }, { val: "gif", label: "GIF", accept: ".gif,image/gif", type: "image" }, { val: "ico", label: "ICO", accept: ".ico,image/x-icon", type: "image" }, { val: "jpg", label: "JPG", accept: ".jpg,.jpeg,image/jpeg", type: "image" }, { val: "png", label: "PNG", accept: ".png,image/png", type: "image" }, { val: "tiff", label: "TIFF", accept: ".tiff,.tif,image/tiff", type: "image" }, { val: "webp", label: "WEBP", accept: ".webp,image/webp", type: "image" }] },
+            { title: "video", formats: [{ val: "avi", label: "AVI", accept: ".avi,video/x-msvideo", type: "video" }, { val: "mkv", label: "MKV", accept: ".mkv,video/x-matroska", type: "video" }, { val: "mov", label: "MOV", accept: ".mov,video/quicktime", type: "video" }, { val: "mp4", label: "MP4", accept: ".mp4,video/mp4", type: "video" }, { val: "webm", label: "WEBM", accept: ".webm,video/webm", type: "video" }, { val: "wmv", label: "WMV", accept: ".wmv,video/x-ms-wmv", type: "video" }] }
         ];
 
         const outputMaps = {
-            'image': [{ val: "bmp", label: "BMP", category: "image" }, { val: "gif", label: "GIF", category: "image" }, { val: "ico", label: "ICO", category: "image" }, { val: "jpg", label: "JPG", category: "image" }, { val: "pdf", label: "PDF", category: "document" }, { val: "png", label: "PNG", category: "image" }, { val: "webp", label: "WEBP", category: "image" }],
+            'image': [{ val: "bmp", label: "BMP", category: "image" }, { val: "gif", label: "GIF", category: "image" }, { val: "ico", label: "ICO", category: "image" }, { val: "jpg", label: "JPG", category: "image" }, { val: "pdf", label: "PDF", category: "document" }, { val: "png", label: "PNG", category: "image" }, { val: "tiff", label: "TIFF", category: "image" }, { val: "webp", label: "WEBP", category: "image" }],
             'audio': [{ val: "aac", label: "AAC", category: "audio" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "wav", label: "WAV", category: "audio" }, { val: "flac", label: "FLAC", category: "audio" }],
-            'video': [{ val: "avi", label: "AVI", category: "video" }, { val: "gif", label: "GIF", category: "image" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "mp4", label: "MP4", category: "video" }, { val: "webm", label: "WEBM", category: "video" }],
-            'doc': [{ val: "jpg", label: "JPG", category: "image" }, { val: "png", label: "PNG", category: "image" }],
+            'video': [{ val: "avi", label: "AVI", category: "video" }, { val: "gif", label: "GIF", category: "image" }, { val: "flac", label: "FLAC", category: "audio" }, { val: "mkv", label: "MKV", category: "video" }, { val: "mov", label: "MOV", category: "video" }, { val: "mp3", label: "MP3", category: "audio" }, { val: "mp4", label: "MP4", category: "video" }, { val: "webm", label: "WEBM", category: "video" }, { val: "wma", label: "WMA", category: "audio" }, { val: "wmv", label: "WMV", category: "video" }],
+            'doc': [{ val: "jpg", label: "JPG", category: "image" }, { val: "png", label: "PNG", category: "image" }, { val: "webp", label: "WEBP", category: "image" }, { val: "txt", label: "TXT", category: "document" }, { val: "md", label: "MD", category: "document" }, { val: "html", label: "HTML", category: "web" }],
             'text': [{ val: "html", label: "HTML", category: "web" }, { val: "pdf", label: "PDF", category: "document" }]
         };
 
-        /**
-         * Renders the split menu layout.
-         * Ensures flex-row is used so filetypes appear NEXT to categories.
-         */
         function renderSplitMenu(containerId, categoriesData, onSelectCallback) {
-            const container = document.getElementById(containerId);
+            const container = document.getElementById(containerId); 
+            if(!container) return;
             container.innerHTML = '';
-            // Locked flex row to prevent stacking
-            container.className = "flex flex-row w-full h-[300px] bg-slate-900"; 
-            
-            const sideBar = document.createElement('div');
-            sideBar.className = "w-2/5 bg-slate-900 border-r border-slate-700 overflow-y-auto py-2 custom-scroll"; 
-            
-            const contentArea = document.createElement('div');
-            contentArea.className = "w-3/5 overflow-y-auto custom-scroll bg-slate-900/40";
-
+            container.className = "flex w-full h-[320px] bg-slate-900"; 
+            const sideBar = document.createElement('div'); sideBar.className = "w-2/5 bg-slate-900 border-r border-slate-700 overflow-y-auto py-2 custom-scroll"; 
+            const contentArea = document.createElement('div'); contentArea.className = "w-3/5 overflow-y-auto custom-scroll bg-slate-900/40";
             const renderRightSide = (formats) => {
                 contentArea.innerHTML = '';
-                const list = document.createElement('div');
-                list.className = "flex flex-col";
                 formats.forEach(fmt => {
                     const btn = document.createElement('button');
                     btn.className = "w-full text-left px-4 py-3 hover:bg-slate-800 transition-colors border-b border-slate-800/60 last:border-0 text-sm text-slate-300 font-medium";
                     btn.textContent = fmt.label;
                     btn.onclick = (e) => { e.stopPropagation(); onSelectCallback(fmt.val); };
-                    list.appendChild(btn);
+                    contentArea.appendChild(btn);
                 });
-                contentArea.appendChild(list);
             };
-
             categoriesData.forEach((cat, index) => {
                 const btn = document.createElement('button');
-                // Consistently uppercase and bold
                 btn.className = `w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 ${index === 0 ? 'text-emerald-400 bg-slate-800/50 border-emerald-500' : 'text-slate-500 border-transparent hover:text-emerald-400 hover:bg-slate-800/30'}`;
                 btn.textContent = cat.title;
-                
                 btn.onmouseenter = () => {
                     Array.from(sideBar.children).forEach(child => child.className = 'w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 text-slate-500 border-transparent hover:text-emerald-400 hover:bg-slate-800/30');
                     btn.className = 'w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-l-2 text-emerald-400 bg-slate-800/50 border-emerald-500';
@@ -516,21 +300,15 @@
                 btn.onclick = (e) => { e.stopPropagation(); btn.onmouseenter(); };
                 sideBar.appendChild(btn);
             });
-            
             if (categoriesData.length > 0) renderRightSide(categoriesData[0].formats);
-            
-            container.appendChild(sideBar);
-            container.appendChild(contentArea);
+            container.appendChild(sideBar); container.appendChild(contentArea);
         }
 
         function renderFromMenu() { renderSplitMenu('from-grid', inputCategories, selectFrom); }
         function renderToMenu(inputType) {
             const options = (outputMaps[inputType] || []).filter(opt => opt.val !== selectedFrom);
             const grouped = {};
-            options.forEach(opt => {
-                if(!grouped[opt.category]) grouped[opt.category] = [];
-                grouped[opt.category].push(opt);
-            });
+            options.forEach(opt => { if(!grouped[opt.category]) grouped[opt.category] = []; grouped[opt.category].push(opt); });
             const sortedCatNames = Object.keys(grouped).sort();
             const categoriesData = sortedCatNames.map(catName => ({ title: catName, formats: grouped[catName] }));
             renderSplitMenu('to-grid', categoriesData, selectTo);
@@ -539,128 +317,66 @@
         function selectFrom(val, skipUrlUpdate = false) {
             const data = inputCategories.flatMap(c => c.formats).find(f => f.val === val);
             if (!data) return;
-            selectedFrom = val;
-            fromBadge.textContent = val.toUpperCase();
-            fromLabel.textContent = data.label;
-            fromMenu.classList.add('hidden');
-            fileInputUniv.accept = data.accept;
+            selectedFrom = val; fromBadge.textContent = val.toUpperCase(); fromLabel.textContent = data.label;
+            fromMenu.classList.add('hidden'); fileInputUniv.accept = data.accept;
             document.getElementById('univ-subtitle').textContent = `Supports ${data.label} files`;
-            
-            // Re-render "To" menu based on new "From" selection type
             const grouped = {};
             (outputMaps[data.type] || []).filter(opt => opt.val !== val).forEach(opt => {
-                if(!grouped[opt.category]) grouped[opt.category] = [];
-                grouped[opt.category].push(opt);
+                if(!grouped[opt.category]) grouped[opt.category] = []; grouped[opt.category].push(opt);
             });
-            const sortedCatNames = Object.keys(grouped).sort();
-            const categoriesData = sortedCatNames.map(catName => ({ title: catName, formats: grouped[catName] }));
+            const categoriesData = Object.keys(grouped).sort().map(catName => ({ title: catName, formats: grouped[catName] }));
             renderSplitMenu('to-grid', categoriesData, selectTo);
-
-            // Auto-select first available "To" format if none selected
             const firstOpt = (outputMaps[data.type] || []).find(o => o.val !== val);
             if(firstOpt) selectTo(firstOpt.val, skipUrlUpdate);
-            
             if (!skipUrlUpdate) updateUrl();
         }
 
         function selectTo(val, skipUrlUpdate = false) {
-            selectedTo = val;
-            if (toBadge) toBadge.textContent = val.toUpperCase();
-            if (toLabel) toLabel.textContent = val.toUpperCase(); 
-            toMenu.classList.add('hidden');
-            
-            if (!skipUrlUpdate) updateUrl();
+            selectedTo = val; if (toBadge) toBadge.textContent = val.toUpperCase(); if (toLabel) toLabel.textContent = val.toUpperCase(); 
+            toMenu.classList.add('hidden'); if (!skipUrlUpdate) updateUrl();
         }
 
         function updateUrl() {
-            if (!selectedFrom || !selectedTo) return;
-
             const flat = inputCategories.flatMap(c => c.formats);
             const fromData = flat.find(f => f.val === selectedFrom);
             if (!fromData) return;
             const toLabelStr = selectedTo.toUpperCase();
-            
             const toolName = `${fromData.label} to ${toLabelStr}`;
-            const newTitle = `${toolName} Converter | PrivaConvert`;
-            document.title = newTitle;
-            
-            const metaDesc = document.getElementById('meta-desc');
-            if (metaDesc) {
-                metaDesc.content = `Free local ${toolName} converter. Securely convert your files in your browser with zero server uploads. 100% private.`;
-            }
-            
+            document.title = `${toolName} Converter | PrivaConvert`;
             const heroMain = document.getElementById('hero-main-heading');
-            if (heroMain) {
-                heroMain.textContent = `${toolName} Converter.`;
-            }
-
+            if (heroMain) heroMain.textContent = `${toolName} Converter.`;
             try {
                 const url = new URL(window.location);
-                url.searchParams.set('from', selectedFrom);
-                url.searchParams.set('to', selectedTo);
+                url.searchParams.set('from', selectedFrom); url.searchParams.set('to', selectedTo);
                 window.history.replaceState({}, '', url);
             } catch (e) {}
         }
 
         function swapFormats() {
-            if (!selectedFrom || !selectedTo) return;
-            const oldFrom = selectedFrom;
-            const oldTo = selectedTo;
-            const flatInputs = inputCategories.flatMap(c => c.formats).find(f => f.val === oldTo);
-            if (!flatInputs) { showMessage(`Cannot swap: '${oldTo.toUpperCase()}' isn't a valid input.`, true); return; }
+            const oldFrom = selectedFrom; const oldTo = selectedTo;
+            const flatInputs = inputCategories.flatMap(c => c.formats);
+            const isValidInput = flatInputs.find(f => f.val === oldTo);
+            if (!isValidInput) { showMessage(`Cannot swap: '${oldTo.toUpperCase()}' isn't a valid input.`, true); return; }
             selectFrom(oldTo);
-            const outputOpts = outputMaps[flatInputs.type] || [];
+            const outputOpts = outputMaps[isValidInput.type] || [];
             if (outputOpts.find(o => o.val === oldFrom)) selectTo(oldFrom);
+            else showMessage(`Cannot convert ${oldTo.toUpperCase()} back to ${oldFrom.toUpperCase()}`, true);
         }
 
         function renderSeoLinks() {
             const container = document.getElementById('seo-links-container');
             if (!container) return;
-
-            const popular = [
-                { f: 'png', t: 'ico' }, { f: 'jpg', t: 'png' }, { f: 'mp4', t: 'mp3' }, 
-                { f: 'pdf', t: 'jpg' }, { f: 'webp', t: 'png' }, { f: 'mov', t: 'mp4' },
-                { f: 'wav', t: 'mp3' }, { f: 'md', t: 'pdf' }, { f: 'jpg', t: 'webp' },
-                { f: 'avi', t: 'mp4' }, { f: 'flac', t: 'wav' }, { f: 'gif', t: 'mp4' },
-                { f: 'tiff', t: 'png' }, { f: 'mp4', t: 'webm' }, { f: 'png', t: 'pdf' },
-                { f: 'aac', t: 'mp3' }, { f: 'bmp', t: 'jpg' }, { f: 'pdf', t: 'png' },
-                { f: 'm4a', t: 'mp3' }, { f: 'mkv', t: 'mp4' }, { f: 'wav', t: 'flac' },
-                { f: 'png', t: 'jpg' }, { f: 'txt', t: 'pdf' }, { f: 'jpg', t: 'ico' },
-                { f: 'mov', t: 'gif' }, { f: 'mp3', t: 'wav' }, { f: 'pdf', t: 'webp' },
-                { f: 'jpg', t: 'pdf' }, { f: 'png', t: 'webp' }, { f: 'gif', t: 'webp' }
-            ];
-
+            const popular = [ {f:'png',t:'ico'}, {f:'jpg',t:'png'}, {f:'mp4',t:'mp3'}, {f:'pdf',t:'jpg'}, {f:'webp',t:'png'}, {f:'mov',t:'mp4'}, {f:'wav',t:'mp3'}, {f:'md',t:'pdf'}, {f:'tiff',t:'png'}, {f:'mp4',t:'webm'}, {f:'png',t:'pdf'}, {f:'jpg',t:'ico'}, {f:'mov',t:'gif'}, {f:'mp3',t:'wav'}, {f:'pdf',t:'webp'}, {f:'jpg',t:'pdf'}, {f:'png',t:'webp'}, {f:'gif',t:'webp'} ];
             popular.forEach(pair => {
-                const a = document.createElement('a');
-                a.href = `/?from=${pair.f}&to=${pair.t}`;
+                const a = document.createElement('a'); a.href = `/?from=${pair.f}&to=${pair.t}`;
                 a.className = "bg-slate-900/50 border border-slate-800 hover:border-emerald-500/40 p-3 rounded-xl text-center text-[11px] font-semibold text-slate-400 hover:text-emerald-400 transition-all";
                 a.textContent = `${pair.f.toUpperCase()} to ${pair.t.toUpperCase()}`;
-                
-                a.onclick = (e) => {
-                    e.preventDefault();
-                    selectFrom(pair.f);
-                    selectTo(pair.t);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
+                a.onclick = (e) => { e.preventDefault(); selectFrom(pair.f); selectTo(pair.t); window.scrollTo({ top: 0, behavior: 'smooth' }); };
                 container.appendChild(a);
             });
         }
 
-        setupDropZone(dropZoneUniv, fileInputUniv, handleFiles);
-
-        function setupDropZone(zone, input, handler) {
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => zone.addEventListener(eName, (e) => { e.preventDefault(); e.stopPropagation(); }, false));
-            ['dragenter', 'dragover'].forEach(eName => zone.addEventListener(eName, () => zone.classList.add('active'), false));
-            ['dragleave', 'drop'].forEach(eName => zone.addEventListener(eName, () => zone.classList.remove('active'), false));
-            zone.addEventListener('drop', (e) => handler(e.dataTransfer.files), false);
-            input.addEventListener('change', (e) => { handler(e.target.files); input.value = ''; }, false);
-        }
-
         async function handleFiles(files) {
-            if (!selectedFrom || !selectedTo) {
-                showMessage("Please select a conversion type first.", true);
-                return;
-            }
             if (files.length === 0) return;
             resultsAreaUniv.classList.remove('hidden');
             for (const file of files) {
@@ -672,9 +388,12 @@
                     if(statusEl) statusEl.textContent = "Processing to " + currentTarget.toUpperCase() + "...";
                     const ffmpegFormats = ['mp4','mp3','aac','wav','mkv','webm','avi','mov','gif','ico','wmv','flac'];
                     if (ffmpegFormats.includes(currentTarget)) await processMediaWorker(file, currentTarget, id);
-                    else if (file.type.startsWith('image/') || currentTarget === 'pdf') await new Promise(r => processImage(file, currentTarget, id, r));
-                    else if (file.type === 'application/pdf') await processPdfExtract(file, currentTarget, id);
-                    else if (file.name.endsWith('.md') || file.name.endsWith('.txt')) await processText(file, currentTarget, id);
+                    else if (currentTarget === 'pdf' && file.type.startsWith('image/')) await new Promise(r => processImage(file, 'pdf', id, r));
+                    else if (file.type.startsWith('image/')) await new Promise(r => processImage(file, currentTarget, id, r));
+                    else if (file.type === 'application/pdf') {
+                        if(['jpg','png','webp'].includes(currentTarget)) await processPdfExtract(file, currentTarget, id);
+                        else if(['txt','md','html'].includes(currentTarget)) await processPdfText(file, currentTarget, id);
+                    } else if (file.name.endsWith('.md') || file.name.endsWith('.txt')) await processText(file, currentTarget, id);
                     else markItemError(id, "Unsupported format.");
                 };
                 conversionQueue.push(task);
@@ -683,73 +402,68 @@
         }
 
         async function processQueue() {
-            if (isProcessing) return;
-            isProcessing = true;
+            if (isProcessing) return; isProcessing = true;
             while (conversionQueue.length > 0) {
                 const task = conversionQueue.shift();
-                try { await task(); await new Promise(r => setTimeout(r, 1000)); } 
-                catch (e) { console.error(e); }
+                try { await task(); await new Promise(r => setTimeout(r, 800)); } catch (e) {}
             }
             isProcessing = false;
         }
 
+        async function processPdfText(file, format, id) {
+            try {
+                const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+                let fullText = "";
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    fullText += textContent.items.map(item => item.str).join(' ') + '\n\n';
+                }
+                const mime = format === 'html' ? 'text/html' : format === 'md' ? 'text/markdown' : 'text/plain';
+                let content = fullText;
+                if(format === 'html') content = `<html><body><pre>${fullText}</pre></body></html>`;
+                else if(format === 'md') content = `# ${file.name}\n\n${fullText}`;
+                finalizeItem(id, file.name, format, new Blob([content], { type: mime }));
+            } catch (e) { markItemError(id, "PDF Text Error"); }
+        }
+
         function processMediaWorker(file, format, id) {
             return new Promise((resolve, reject) => {
-                ffmpegLoader.classList.remove('hidden');
-                ffmpegLabel.textContent = "Starting Engine...";
-                ffmpegStatus.textContent = "0%";
-                ffmpegProgress.style.width = "5%";
-                cancelCurrentTask = () => { reject("Cancelled"); };
-                const worker = createWorker();
-                currentWorker = worker;
-                
+                ffmpegLoader.classList.remove('hidden'); ffmpegStatus.textContent = "0%"; ffmpegProgress.style.width = "5%";
+                cancelCurrentTask = () => reject("Cancelled");
+                const worker = createWorker(); currentWorker = worker;
                 worker.onmessage = function(e) {
                     const msg = e.data;
                     if (msg.type === 'progress') {
-                        const pct = Math.round(msg.ratio * 100);
-                        ffmpegLabel.textContent = "Processing...";
-                        ffmpegStatus.textContent = `${pct}%`;
-                        ffmpegProgress.style.width = `${pct}%`;
+                        const pct = Math.round(msg.ratio * 100); ffmpegLabel.textContent = "Processing..."; ffmpegStatus.textContent = `${pct}%`; ffmpegProgress.style.width = `${pct}%`;
                     } else if (msg.type === 'done') {
                         finalizeItem(msg.id, file.name, msg.format, new Blob([msg.buffer]));
-                        worker.terminate();
-                        ffmpegLoader.classList.add('hidden');
-                        resolve();
+                        worker.terminate(); ffmpegLoader.classList.add('hidden'); resolve();
                     } else if (msg.type === 'error') {
-                        markItemError(msg.id, "Local engine error.");
-                        worker.terminate();
-                        ffmpegLoader.classList.add('hidden');
-                        resolve(); 
+                        markItemError(msg.id, "Local engine error."); worker.terminate(); ffmpegLoader.classList.add('hidden'); resolve(); 
                     }
                 };
-                const reader = new FileReader();
-                reader.onload = function() {
-                    worker.postMessage({ type: 'start', data: { fileData: reader.result, fileName: file.name, outputFormat: format, id: id } }, [reader.result]);
-                };
+                const reader = new FileReader(); reader.onload = () => worker.postMessage({ type: 'start', data: { fileData: reader.result, fileName: file.name, outputFormat: format, id: id } }, [reader.result]);
                 reader.readAsArrayBuffer(file);
             });
         }
 
         function processImage(file, format, id, callback) {
             const reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = (e) => {
                 const img = new Image();
-                img.onload = function() {
+                img.onload = () => {
                     if (format === 'pdf') {
                         const doc = new jspdf.jsPDF({ orientation: img.width > img.height ? 'l' : 'p', unit: 'px', format: [img.width, img.height] });
-                        doc.addImage(img, 'JPEG', 0, 0, img.width, img.height);
-                        finalizeItem(id, file.name, 'pdf', doc.output('blob'));
+                        doc.addImage(img, 'JPEG', 0, 0, img.width, img.height); finalizeItem(id, file.name, 'pdf', doc.output('blob'));
                     } else {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width; canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        if (!['png', 'webp', 'ico'].includes(format)) { ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-                        ctx.drawImage(img, 0, 0);
+                        const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height;
+                        const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0);
                         canvas.toBlob(blob => finalizeItem(id, file.name, format, blob), `image/${format==='jpg'?'jpeg':format}`, 0.9);
                     }
                     if(callback) callback();
                 };
-                img.src = event.target.result;
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -759,88 +473,71 @@
                 const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
                 const zip = new JSZip();
                 for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const viewport = page.getViewport({ scale: 2.0 });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
+                    const page = await pdf.getPage(i); const viewport = page.getViewport({ scale: 2.0 });
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
                     canvas.height = viewport.height; canvas.width = viewport.width;
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    const blob = await new Promise(r => canvas.toBlob(r, `image/${format === 'png'?'png':'jpeg'}`, 0.8));
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    const blob = await new Promise(r => canvas.toBlob(r, `image/${format==='png'?'png':'jpeg'}`, 0.8));
                     zip.file(`page_${i}.${format}`, blob);
                 }
-                finalizeItem(id, file.name, 'zip', await zip.generateAsync({type:"blob"}), `${file.name}_pages.zip`);
+                finalizeItem(id, file.name, 'zip', await zip.generateAsync({type:"blob"}), `${file.name}_extracted.zip`);
             } catch (e) { markItemError(id, "PDF Parse Error"); }
         }
 
         async function processText(file, format, id) {
             const text = await file.text();
-            if (format === 'html') {
-                finalizeItem(id, file.name, 'html', new Blob([marked.parse(text)], {type: 'text/html'}));
-            } else if (format === 'pdf') {
-                const renderDiv = document.getElementById('hidden-render');
-                renderDiv.innerHTML = marked.parse(text);
+            if (format === 'html') finalizeItem(id, file.name, 'html', new Blob([marked.parse(text)], {type: 'text/html'}));
+            else if (format === 'pdf') {
+                const renderDiv = document.getElementById('hidden-render'); renderDiv.innerHTML = marked.parse(text);
                 const canvas = await html2canvas(renderDiv, { scale: 2 });
                 const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
                 pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-                finalizeItem(id, file.name, 'pdf', pdf.output('blob'));
-                renderDiv.innerHTML = '';
+                finalizeItem(id, file.name, 'pdf', pdf.output('blob')); renderDiv.innerHTML = '';
             }
         }
 
         function addLoadingItem(id, name, target) {
-            const div = document.createElement('div');
-            div.id = id;
+            const div = document.createElement('div'); div.id = id;
             div.className = "flex items-center justify-between bg-slate-800/50 p-4 rounded-lg border border-slate-700 animate-pulse";
             div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="loader-2" class="animate-spin text-emerald-500 h-5 w-5"></i><div><div class="text-sm font-medium text-white truncate max-w-[200px]">${name}</div><div id="status-${id}" class="text-xs text-slate-500">Queued to ${target.toUpperCase()}...</div></div></div>`;
-            fileListUniv.appendChild(div);
-            lucide.createIcons();
+            fileListUniv.appendChild(div); lucide.createIcons();
         }
 
         function finalizeItem(id, originalName, ext, blob, overrideName) {
-            const div = document.getElementById(id);
-            if (!div) return;
+            const div = document.getElementById(id); if (!div) return;
             const newName = overrideName || originalName.substring(0, originalName.lastIndexOf('.')) + '.' + ext;
-            const url = URL.createObjectURL(blob);
-            processedFiles.push({ name: newName, blob: blob });
-            div.className = "flex items-center justify-between bg-slate-800 p-3 rounded-lg border border-emerald-500/30 transition-all";
-            div.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><div class="bg-emerald-500/20 p-2 rounded-full flex-shrink-0"><i data-lucide="check" class="text-emerald-400 h-4 w-4"></i></div><div class="overflow-hidden"><div class="text-sm font-medium text-white truncate max-w-[150px] sm:max-w-[300px]">${newName}</div><div class="text-xs text-emerald-500">${formatBytes(blob.size)}</div></div></div><a href="${url}" download="${newName}" class="flex-shrink-0 flex items-center bg-slate-700 hover:bg-slate-600 text-white p-2 rounded-md transition-colors border border-slate-600" title="Download"><i data-lucide="download" class="h-4 w-4"></i></a>`;
-            lucide.createIcons();
-            if(processedFiles.length > 0) downloadAllUniv.classList.remove('hidden');
+            const url = URL.createObjectURL(blob); processedFiles.push({ name: newName, blob: blob });
+            div.className = "flex items-center justify-between bg-slate-800 p-3 rounded-lg border border-emerald-500/30 transition-all scale-[1.02]";
+            div.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><div class="bg-emerald-500/20 p-2 rounded-full flex-shrink-0"><i data-lucide="check" class="text-emerald-400 h-4 w-4"></i></div><div class="overflow-hidden"><div class="text-sm font-medium text-white truncate max-w-[150px] sm:max-w-[300px]">${newName}</div><div class="text-xs text-emerald-500">${formatBytes(blob.size)}</div></div></div><a href="${url}" download="${newName}" class="flex-shrink-0 flex items-center bg-slate-700 hover:bg-slate-600 text-white p-2 rounded-md transition-colors border border-slate-600"><i data-lucide="download" class="h-4 w-4"></i></a>`;
+            lucide.createIcons(); if(processedFiles.length > 0) downloadAllUniv.classList.remove('hidden');
+            setTimeout(() => div.classList.remove('scale-[1.02]'), 300);
         }
 
         function markItemError(id, msg) {
-            const div = document.getElementById(id);
-            if (!div) return;
+            const div = document.getElementById(id); if (!div) return;
             div.className = "flex items-center justify-between bg-red-900/10 p-3 rounded-lg border border-red-500/30";
             div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="alert-triangle" class="text-red-500 h-5 w-5"></i><div><div class="text-sm font-medium text-white">Error</div><div class="text-xs text-red-400">${msg}</div></div></div>`;
             lucide.createIcons();
         }
 
         function markItemCancelled(id) {
-            const div = document.getElementById(id);
-            if (!div) return;
+            const div = document.getElementById(id); if (!div) return;
             div.className = "flex items-center justify-between bg-slate-900/50 p-3 rounded-lg border border-slate-700 opacity-60";
-            div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="slash" class="text-slate-500 h-4 w-4"></i><div><div class="text-sm font-medium text-slate-400">Cancelled</div></div></div>`;
+            div.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="slash" class="text-slate-500 h-4 w-4"></i><div><div class="text-sm font-medium text-slate-400">Cancelled</div><div class="text-[10px] text-slate-600">Process stopped by user</div></div></div>`;
             lucide.createIcons();
         }
 
         function cancelAll() {
-            if(currentWorker) {
-                currentWorker.terminate();
-                currentWorker = null;
-            }
-            if(cancelCurrentTask) {
-                try { cancelCurrentTask(); } catch(e){}
-                cancelCurrentTask = null;
-            }
-            conversionQueue = [];
-            isProcessing = false;
-            
+            if(currentWorker) { currentWorker.terminate(); currentWorker = null; }
+            if(cancelCurrentTask) { try { cancelCurrentTask(); } catch(e){} cancelCurrentTask = null; }
+            conversionQueue = []; isProcessing = false;
             document.querySelectorAll('[id^="status-"]').forEach(el => {
-                const id = el.id.replace('status-', '');
-                markItemCancelled(id);
+                const parent = document.getElementById(el.id.replace('status-', ''));
+                if (parent && (parent.classList.contains('animate-pulse'))) {
+                    markItemCancelled(el.id.replace('status-', ''));
+                }
             });
-            ffmpegLoader.classList.add('hidden');
+            ffmpegLoader.classList.add('hidden'); lucide.createIcons();
         }
 
         function clearAll() { cancelAll(); fileListUniv.innerHTML = ''; resultsAreaUniv.classList.add('hidden'); downloadAllUniv.classList.add('hidden'); processedFiles = []; if (fileInputUniv) fileInputUniv.value = ''; }
@@ -848,53 +545,46 @@
         window.clearAll = clearAll; window.cancelAll = cancelAll;
 
         downloadAllUniv.addEventListener('click', async () => {
-            const zip = new JSZip();
-            processedFiles.forEach(f => zip.file(f.name, f.blob));
-            const content = await zip.generateAsync({type:"blob"});
-            saveAs(content, "privaconvert_bundle.zip");
+            const zip = new JSZip(); processedFiles.forEach(f => zip.file(f.name, f.blob));
+            const content = await zip.generateAsync({type:"blob"}); saveAs(content, "privaconvert_bundle.zip");
         });
 
         function formatBytes(bytes) { if (!+bytes) return '0 B'; const k = 1024, sizes = ['B', 'KB', 'MB', 'GB'], i = Math.floor(Math.log(bytes) / Math.log(k)); return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`; }
 
         function handleUrlParams() {
             const params = new URLSearchParams(window.location.search);
-            const fromParam = params.get('from')?.toLowerCase();
-            const toParam = params.get('to')?.toLowerCase();
-
-            if (fromParam) {
-                const flatInputs = inputCategories.flatMap(c => c.formats);
-                const match = flatInputs.find(f => f.val === fromParam);
+            const f = params.get('from')?.toLowerCase(); const t = params.get('to')?.toLowerCase();
+            if (f) {
+                const match = inputCategories.flatMap(c => c.formats).find(fmt => fmt.val === f);
                 if (match) {
-                    selectFrom(fromParam, true);
-                    if (toParam) {
-                        const outputOpts = outputMaps[match.type] || [];
-                        const toMatch = outputOpts.find(o => o.val === toParam);
-                        if (toMatch) {
-                            selectTo(toParam, true);
-                            updateUrl();
-                        }
+                    selectFrom(f, true);
+                    if (t) {
+                        const toMatch = outputMaps[match.type]?.find(o => o.val === t);
+                        if (toMatch) { selectTo(t, true); updateUrl(); }
                     }
                 }
-            } else {
-                fromBadge.textContent = "...";
-                fromLabel.textContent = "Select";
-                toBadge.textContent = "...";
-                toLabel.textContent = "Select";
-                document.getElementById('hero-main-heading').textContent = "Universal Local Converter";
-            }
+            } else { updateUrl(); }
         }
 
         function initSelectors() { 
             renderFromMenu(); 
+            selectFrom('jpg', true); 
             handleUrlParams();
             renderSeoLinks();
         }
 
-        fromBtn.addEventListener('click', (e) => { e.stopPropagation(); fromMenu.classList.toggle('hidden'); toMenu.classList.add('hidden'); });
-        toBtn.addEventListener('click', (e) => { e.stopPropagation(); toMenu.classList.toggle('hidden'); fromMenu.classList.add('hidden'); });
+        const zone = dropZoneUniv; const input = fileInputUniv;
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => zone.addEventListener(e, (ev) => { ev.preventDefault(); ev.stopPropagation(); }, false));
+        ['dragenter', 'dragover'].forEach(e => zone.addEventListener(e, () => zone.classList.add('active'), false));
+        ['dragleave', 'drop'].forEach(e => zone.addEventListener(e, () => zone.classList.remove('active'), false));
+        zone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files), false);
+        input.addEventListener('change', (e) => { handleFiles(e.target.files); input.value = ''; }, false);
+
+        fromBtn.onclick = (e) => { e.stopPropagation(); fromMenu.classList.toggle('hidden'); toMenu.classList.add('hidden'); };
+        toBtn.onclick = (e) => { e.stopPropagation(); toMenu.classList.toggle('hidden'); fromMenu.classList.add('hidden'); };
         document.addEventListener('click', () => { fromMenu.classList.add('hidden'); toMenu.classList.add('hidden'); });
 
-        initSelectors();
+        document.addEventListener('DOMContentLoaded', () => { initSelectors(); });
     </script>
 </body>
 </html>
