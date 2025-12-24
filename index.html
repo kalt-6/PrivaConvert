@@ -69,6 +69,26 @@
         #hidden-render { position: absolute; top: -9999px; left: -9999px; width: 794px; padding: 40px; }
         #app-message { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translate(-50%, 20px); opacity: 0; visibility: hidden; pointer-events: none; }
         #app-message.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+        
+        /* Link styling for SEO links */
+        .seo-link {
+            display: block;
+            background-color: rgba(15, 23, 42, 0.5);
+            border: 1px solid #1e293b;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #94a3b8;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .seo-link:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            color: #34d399;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -173,7 +193,27 @@
 
         <section class="w-full max-w-5xl mt-16 px-4">
             <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 text-center">Popular Conversion Tools</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="seo-links-container"></div>
+            <!-- Static SEO Links (Hardcoded for Crawler Discovery) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="seo-links-container">
+                <a href="?from=png&to=ico" class="seo-link">PNG to ICO</a>
+                <a href="?from=jpg&to=png" class="seo-link">JPG to PNG</a>
+                <a href="?from=mp4&to=mp3" class="seo-link">MP4 to MP3</a>
+                <a href="?from=pdf&to=jpg" class="seo-link">PDF to JPG</a>
+                <a href="?from=webp&to=png" class="seo-link">WEBP to PNG</a>
+                <a href="?from=mov&to=mp4" class="seo-link">MOV to MP4</a>
+                <a href="?from=wav&to=mp3" class="seo-link">WAV to MP3</a>
+                <a href="?from=flac&to=wav" class="seo-link">FLAC to WAV</a>
+                <a href="?from=mp4&to=webm" class="seo-link">MP4 to WEBM</a>
+                <a href="?from=png&to=pdf" class="seo-link">PNG to PDF</a>
+                <a href="?from=md&to=pdf" class="seo-link">MD to PDF</a>
+                <a href="?from=gif&to=mp4" class="seo-link">GIF to MP4</a>
+                <a href="?from=pdf&to=png" class="seo-link">PDF to PNG</a>
+                <a href="?from=bmp&to=jpg" class="seo-link">BMP to JPG</a>
+                <a href="?from=tiff&to=png" class="seo-link">TIFF to PNG</a>
+                <a href="?from=mkv&to=mp4" class="seo-link">MKV to MP4</a>
+                <a href="?from=avi&to=mp4" class="seo-link">AVI to MP4</a>
+                <a href="?from=webm&to=mp4" class="seo-link">WEBM to MP4</a>
+            </div>
         </section>
     </main>
 
@@ -316,9 +356,16 @@
             const fromData = flat.find(f => f.val === selectedFrom);
             if (!fromData || !selectedTo) return;
             const toolName = `${fromData.label} to ${selectedTo.toUpperCase()}`;
+            
+            // SEO Updates
             document.title = `${toolName} | PrivaConvert`;
             const hero = document.getElementById('hero-main-heading');
-            if (hero) hero.textContent = `${fromData.label} to ${selectedTo.toUpperCase()} Converter`;
+            if (hero) hero.textContent = `${toolName} Converter`;
+            
+            // Dynamically update Meta Description for SEO
+            const desc = document.getElementById('meta-desc');
+            if (desc) desc.content = `Convert ${fromData.label} to ${selectedTo.toUpperCase()} privately and locally. Free online ${fromData.label} to ${selectedTo.toUpperCase()} converter.`;
+
             try { const url = new URL(window.location); url.searchParams.set('from', selectedFrom); url.searchParams.set('to', selectedTo); window.history.replaceState({}, '', url); } catch (e) {}
         }
 
@@ -596,16 +643,23 @@
                 selectedFrom = null; selectedTo = null;
             }
 
-            // Popular Converters Links
-            const seo = document.getElementById('seo-links-container');
-            if (seo) {
-                const popular = [{f:'png',t:'ico'}, {f:'jpg',t:'png'}, {f:'mp4',t:'mp3'}, {f:'pdf',t:'jpg'}, {f:'webp',t:'png'}, {f:'mov',t:'mp4'}, {f:'wav',t:'mp3'}, {f:'flac',t:'wav'}, {f:'mp4',t:'webm'}, {f:'png',t:'pdf'}, {f:'md',t:'pdf'}, {f:'gif',t:'mp4'}, {f:'pdf',t:'png'}, {f:'bmp',t:'jpg'}, {f:'tiff',t:'png'}, {f:'mkv',t:'mp4'}, {f:'avi',t:'mp4'}, {f:'webm',t:'mp4'}];
-                popular.forEach(pair => {
-                    const a = document.createElement('a'); a.href = `/?from=${pair.f}&to=${pair.t}`;
-                    a.className = "bg-slate-900/50 border border-slate-800 hover:border-emerald-500/40 p-3 rounded-xl text-center text-[10px] font-semibold text-slate-400 hover:text-emerald-400 transition-all";
-                    a.textContent = `${pair.f.toUpperCase()} to ${pair.t.toUpperCase()}`;
-                    a.onclick = (e) => { e.preventDefault(); selectFrom(pair.f); selectTo(pair.t); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-                    seo.appendChild(a);
+            // SEO Link Delegation (Preserves SPA feel while using standard links)
+            const seoContainer = document.getElementById('seo-links-container');
+            if (seoContainer) {
+                seoContainer.addEventListener('click', (e) => {
+                    const link = e.target.closest('a');
+                    if (link && link.classList.contains('seo-link')) {
+                        // Prevent page reload to keep it fast for users
+                        e.preventDefault();
+                        const params = new URLSearchParams(link.getAttribute('href').replace('?', ''));
+                        const f = params.get('from');
+                        const t = params.get('to');
+                        if (f && t) {
+                            selectFrom(f);
+                            selectTo(t);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
                 });
             }
 
