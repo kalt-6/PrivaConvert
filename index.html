@@ -9,6 +9,9 @@
     <meta name="description" id="meta-desc" content="A completely private, local file conversion suite. Convert images, audio, video, and documents securely in your browser with zero server uploads using WebAssembly technology.">
     <meta name="keywords" content="file converter, local converter, privacy, image converter, video converter, audio converter, pdf converter, no upload converter">
     
+    <!-- CRITICAL FIX: Dynamic Canonical Tag -->
+    <link rel="canonical" id="canonical-url" href="">
+
     <!-- Open Graph / Social Media SEO -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="PrivaConvert | Local & Private File Conversion">
@@ -335,7 +338,7 @@
             renderToMenu(data.type);
             const firstOpt = (outputMaps[data.type] || []).find(o => o.val !== val);
             if(firstOpt) selectTo(firstOpt.val, skipUrlUpdate);
-            if (!skipUrlUpdate) updateUrl();
+            if (!skipUrlUpdate) updateHistory();
             if(window.lucide) lucide.createIcons();
         }
 
@@ -347,26 +350,47 @@
             if (pendingFiles.length > 0) { 
                 const files = [...pendingFiles]; pendingFiles = []; handleFiles(files); 
             }
-            if (!skipUrlUpdate) updateUrl();
+            if (!skipUrlUpdate) updateHistory();
             if(window.lucide) lucide.createIcons();
         }
 
-        function updateUrl() {
-            const flat = inputCategories.flatMap(c => c.formats);
-            const fromData = flat.find(f => f.val === selectedFrom);
-            if (!fromData || !selectedTo) return;
-            const toolName = `${fromData.label} to ${selectedTo.toUpperCase()}`;
+        // SEPARATE Metadata update from History update to prevent "Redirect" errors
+        function updatePageMetaData(fromLabelText, toLabelText) {
+            const toolName = `${fromLabelText} to ${toLabelText}`;
             
-            // SEO Updates
+            // 1. Update Title
             document.title = `${toolName} | PrivaConvert`;
             const hero = document.getElementById('hero-main-heading');
             if (hero) hero.textContent = `${toolName} Converter`;
             
-            // Dynamically update Meta Description for SEO
+            // 2. Update Description
             const desc = document.getElementById('meta-desc');
-            if (desc) desc.content = `Convert ${fromData.label} to ${selectedTo.toUpperCase()} privately and locally. Free online ${fromData.label} to ${selectedTo.toUpperCase()} converter.`;
+            if (desc) desc.content = `Convert ${fromLabelText} to ${toLabelText} privately and locally. Free online ${fromLabelText} to ${toLabelText} converter.`;
+            
+            // 3. Update Canonical Tag (Crucial for SEO)
+            const canonical = document.getElementById('canonical-url');
+            if (canonical) {
+                // Ensure we include the current query params in the canonical URL
+                // This tells Google: "This specific URL is the authoritative source for this specific content"
+                canonical.href = window.location.href;
+            }
+        }
 
-            try { const url = new URL(window.location); url.searchParams.set('from', selectedFrom); url.searchParams.set('to', selectedTo); window.history.replaceState({}, '', url); } catch (e) {}
+        function updateHistory() {
+            const flat = inputCategories.flatMap(c => c.formats);
+            const fromData = flat.find(f => f.val === selectedFrom);
+            if (!fromData || !selectedTo) return;
+            
+            // Update the UI/Meta first
+            updatePageMetaData(fromData.label, selectedTo.toUpperCase());
+
+            // Then update URL history
+            try { 
+                const url = new URL(window.location); 
+                url.searchParams.set('from', selectedFrom); 
+                url.searchParams.set('to', selectedTo); 
+                window.history.pushState({}, '', url); 
+            } catch (e) {}
         }
 
         function swapFormats() {
@@ -624,14 +648,28 @@
 
             renderFromMenu();
             
+            // Set initial canonical for the homepage
+            const canonical = document.getElementById('canonical-url');
+            if (canonical && !canonical.href) canonical.href = window.location.href;
+
             // Handle URL params
             const params = new URLSearchParams(window.location.search);
             const f = params.get('from')?.toLowerCase(), t = params.get('to')?.toLowerCase();
+            
             if (f) {
                 const foundMatch = inputCategories.flatMap(c => c.formats).find(fmt => fmt.val === f);
                 if (foundMatch) {
-                    selectFrom(f, true);
-                    if (t) { const toMatch = outputMaps[foundMatch.type]?.find(o => o.val === t); if (toMatch) { selectTo(t, true); updateUrl(); } }
+                    selectFrom(f, true); // true = skip history update
+                    if (t) { 
+                        const toMatch = outputMaps[foundMatch.type]?.find(o => o.val === t); 
+                        if (toMatch) { 
+                            selectTo(t, true); // true = skip history update
+                            
+                            // Manually update meta ONLY, do NOT touch history state on load
+                            // This prevents Google from seeing a "redirect"
+                            updatePageMetaData(foundMatch.label, t.toUpperCase());
+                        } 
+                    }
                 }
             } else {
                 if(fromBadge) fromBadge.textContent = "..."; 
